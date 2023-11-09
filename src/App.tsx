@@ -1,33 +1,30 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import charactersData from './assets/characters.json';
 import './App.css'
+import Login from "./Login"
+import Card from "./Card"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isAuth, setAuth] = useState(false);
+
+  const authenticate = () => {
+      setAuth((isAuth) => !isAuth)
+  };
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {isAuth ? (
+          <div>
+            <div className="relative bg-black">
+              <div className="text-white text-[32px] font-normal font-['Helvetica Neue']" onClick={authenticate}>Se déconnecter</div>
+              <Card name={charactersData[0].name} description={charactersData[0].description} imageUrl={charactersData[0].imageUrl}/>
+            </div>
+          </div>
+        ) : (
+          <Login onClick={authenticate}></Login>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
